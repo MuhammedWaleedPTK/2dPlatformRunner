@@ -13,6 +13,7 @@ public class PlayerMovement : MonoBehaviour
     bool isJumped = false;
     bool isFlipped = false;
 
+    [SerializeField] private AudioManager audioManager;
     [SerializeField] private LayerMask jumpableGround;
     [SerializeField] private float moveSpeed = 7f;
     [SerializeField] private float jumpForce = 5f;
@@ -34,13 +35,13 @@ public class PlayerMovement : MonoBehaviour
 
         //taking input for plalyer jump
 
-        if (Input.GetKeyDown(KeyCode.Space)&&IsGrounded())
+        if (Input.GetKeyDown(KeyCode.UpArrow)&&IsGrounded())
         {
-            rb.velocity = new Vector3(rb.velocity.x, jumpForce, 0);
+            Jump();
             isJumped= true;
-        }else if (Input.GetKeyDown(KeyCode.Space) && isJumped)
+        }else if (Input.GetKeyDown(KeyCode.UpArrow) && isJumped)
         {
-            rb.velocity = new Vector3(rb.velocity.x, jumpForce, 0);
+            Jump();
             isJumped= false;
         }
 
@@ -74,7 +75,7 @@ public class PlayerMovement : MonoBehaviour
         MovementState state;
         if (rb.velocity.x == 0)
         {
-            if (Input.GetKeyDown(KeyCode.R))
+            if (Input.GetKeyDown(KeyCode.Space))
             {
                 state = MovementState.idleShoot;
             }
@@ -85,7 +86,7 @@ public class PlayerMovement : MonoBehaviour
         }
         else
         {
-            if (Input.GetKeyDown(KeyCode.R))
+            if (Input.GetKeyDown(KeyCode.Space))
             {
                 state = MovementState.runShoot;
             }
@@ -97,7 +98,7 @@ public class PlayerMovement : MonoBehaviour
         }
         if (rb.velocity.y > 1f)
         {
-            if(Input.GetKeyDown(KeyCode.R))
+            if(Input.GetKeyDown(KeyCode.Space))
             {
                 state = MovementState.jumpShoot;
             }
@@ -109,7 +110,7 @@ public class PlayerMovement : MonoBehaviour
         }
         if (rb.velocity.y < -1f)
         {
-            if (Input.GetKeyDown(KeyCode.R))
+            if (Input.GetKeyDown(KeyCode.Space))
             {
                 state = MovementState.jumpShoot;
             }
@@ -125,5 +126,10 @@ public class PlayerMovement : MonoBehaviour
     private bool IsGrounded()
     {
         return Physics2D.BoxCast(coll.bounds.center, coll.bounds.size, 0f, Vector2.down, 0.1f, jumpableGround);
+    }
+    private void Jump()
+    {
+        audioManager.JumpSound();
+        rb.velocity = new Vector3(rb.velocity.x, jumpForce, 0);
     }
 }

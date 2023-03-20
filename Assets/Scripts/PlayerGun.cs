@@ -5,12 +5,13 @@ using UnityEngine;
 public class PlayerGun : MonoBehaviour
 {
     [SerializeField] private Transform firePoint;
+    [SerializeField] private AudioManager audioManager;
     //[SerializeField] private GameObject bulletPrefab;
     bool isFired = true;
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.R)&&isFired)
+        if (Input.GetKeyDown(KeyCode.Space)&&isFired)
         {
             StartCoroutine(Fire());
             isFired = false;          
@@ -19,6 +20,7 @@ public class PlayerGun : MonoBehaviour
     private IEnumerator Fire()
     {
         yield return new WaitForSeconds(.3f);
+        audioManager.FireSound();
         GameObject bullet = ObjectPool.instance.GetPooledObject();
         if (bullet != null)
         {
@@ -26,7 +28,7 @@ public class PlayerGun : MonoBehaviour
             bullet.transform.rotation = firePoint.rotation;
             bullet.SetActive(true);
         }
-        yield return new WaitForSeconds(.5f);
+        yield return new WaitForSeconds(.2f);
         isFired = true;
 
     }
