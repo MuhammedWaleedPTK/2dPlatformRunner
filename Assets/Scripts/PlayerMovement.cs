@@ -12,6 +12,7 @@ public class PlayerMovement : MonoBehaviour
     float hInput;
     bool isJumped = false;
     bool isFlipped = false;
+    public bool isPlayable = true;
 
     [SerializeField] private AudioManager audioManager;
     [SerializeField] private LayerMask jumpableGround;
@@ -32,39 +33,44 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
-        //taking input for plalyer jump
-
-        if (Input.GetKeyDown(KeyCode.UpArrow)&&IsGrounded())
+        if (isPlayable)
         {
-            Jump();
-            isJumped= true;
-        }else if (Input.GetKeyDown(KeyCode.UpArrow) && isJumped)
-        {
-            Jump();
-            isJumped= false;
+
+
+            //taking input for plalyer jump
+
+            if (Input.GetKeyDown(KeyCode.UpArrow) && IsGrounded())
+            {
+                Jump();
+                isJumped = true;
+            }
+            else if (Input.GetKeyDown(KeyCode.UpArrow) && isJumped)
+            {
+                Jump();
+                isJumped = false;
+            }
+
+
+            // taking input for player movement horizontally
+
+            hInput = Input.GetAxisRaw("Horizontal");
+            rb.velocity = new Vector2(hInput * moveSpeed, rb.velocity.y);
+
+
+            //flipping the player according to the input
+
+            if (rb.velocity.x >= 0.1f && isFlipped)
+            {
+                transform.Rotate(0, 180, 0);
+                isFlipped = false;
+            }
+            else if (rb.velocity.x <= -0.1f && !isFlipped)
+            {
+                transform.Rotate(0, 180, 0);
+                isFlipped = true;
+            }
+            PlayerAnimation();
         }
-
-
-        // taking input for player movement horizontally
-
-        hInput = Input.GetAxisRaw("Horizontal");
-        rb.velocity=new Vector2(hInput*moveSpeed, rb.velocity.y);
-
-
-        //flipping the player according to the input
-
-        if (rb.velocity.x >=0.1f&&isFlipped)
-        {
-            transform.Rotate(0, 180, 0);
-            isFlipped= false;
-        }
-        else if(rb.velocity.x <=-0.1f&&!isFlipped)
-        {
-            transform.Rotate(0, 180, 0);
-            isFlipped= true;
-        }
-        PlayerAnimation();
 
     }
     

@@ -8,10 +8,11 @@ public class PlayerGun : MonoBehaviour
     [SerializeField] private AudioManager audioManager;
     //[SerializeField] private GameObject bulletPrefab;
     bool isFired = true;
+    public bool isFirable = true;
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space)&&isFired)
+        if (Input.GetKeyDown(KeyCode.Space)&&isFired&&isFirable)
         {
             StartCoroutine(Fire());
             isFired = false;          

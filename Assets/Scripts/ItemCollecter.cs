@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class ItemCollecter : MonoBehaviour
 {
-    int collected = 0;
+     public int collected = 0;
     [SerializeField] private TextMeshProUGUI score;
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -18,7 +18,7 @@ public class ItemCollecter : MonoBehaviour
             audioSource.Play();
             collected++;
             Debug.Log("Collected:"+collected.ToString());
-            score.text = "Collected:" + collected.ToString();
+            score.text = collected.ToString();
             boxCollider.enabled = false;
             spriteRenderer.enabled = false;
             

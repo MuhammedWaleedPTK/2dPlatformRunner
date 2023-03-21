@@ -5,6 +5,9 @@ using UnityEngine.SceneManagement;
 
 public class PlayerLIfe : MonoBehaviour
 {
+    private GameManager gameManager;
+    private PlayerMovement playerMovement;
+    private PlayerGun playerGun;
     private Animator anim;
     Rigidbody2D rb;
     [SerializeField] private AudioManager audioManager;
@@ -16,10 +19,13 @@ public class PlayerLIfe : MonoBehaviour
 
     private void Start()
     {
+        gameManager =FindObjectOfType<GameManager>();
         anim= GetComponent<Animator>();
         rb= GetComponent<Rigidbody2D>();
         Debug.Log("Life:" + life.ToString());
         startPosition= transform.position;
+        playerMovement=GetComponent<PlayerMovement>();
+        playerGun= GetComponent<PlayerGun>();
     }
     private void OnCollisionEnter2D(Collision2D collision)
     {
@@ -54,12 +60,13 @@ public class PlayerLIfe : MonoBehaviour
     private void Die()
     {
         audioManager.DeathSound();
-        rb.bodyType = RigidbodyType2D.Static;
+        playerMovement.isPlayable= false;
+        playerGun.isFirable= false;
         anim.SetTrigger("Dead");
         
     }
     private void RestartGame()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        gameManager.GameLost();
     }
 }
