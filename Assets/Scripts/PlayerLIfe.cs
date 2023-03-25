@@ -11,7 +11,7 @@ public class PlayerLIfe : MonoBehaviour
     private Animator anim;
     Rigidbody2D rb;
     [SerializeField] private AudioManager audioManager;
-    Vector3 startPosition;
+    public Vector3 startPosition;
     [SerializeField] private GameObject[] lifeHearts;
 
     private int life = 3;

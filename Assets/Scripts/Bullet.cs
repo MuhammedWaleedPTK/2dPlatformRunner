@@ -35,7 +35,8 @@ public class Bullet : MonoBehaviour
         }
         else if (collision.gameObject.CompareTag("Enemy"))
         {
-            collision.gameObject.SetActive(false);
+            Enemy enemy= collision.gameObject.GetComponent<Enemy>();
+            enemy.StartCoroutine("EnemyDied");
         }
 
         BulletDeactivation();

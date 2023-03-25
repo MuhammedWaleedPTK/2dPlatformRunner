@@ -14,6 +14,10 @@ public class WayPointFollower : MonoBehaviour
         if (Vector2.Distance(waypoints[currentWaypoint].transform.position, transform.position) < 0.1f)
         {
             currentWaypoint++;
+            if (gameObject.tag == "Enemy")
+            {
+                gameObject.transform.Rotate(0, 180, 0);
+            }
             if(currentWaypoint>= waypoints.Length) 
             {
                 currentWaypoint = 0;

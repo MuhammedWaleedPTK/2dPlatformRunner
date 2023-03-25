@@ -12,12 +12,18 @@ public class GameManager : MonoBehaviour
     private PlayerGun playerGun;
     private ItemCollecter itemCollector;
     public TextMeshProUGUI CoinCount;
+    public TextMeshProUGUI totalCount;
 
     private void Start()
     {
         playerMovement=FindObjectOfType<PlayerMovement>();
         playerGun=FindObjectOfType<PlayerGun>();
         itemCollector=FindObjectOfType<ItemCollecter>();
+        if (SceneManager.GetActiveScene().name == "Level01")
+        {
+            PlayerPrefs.SetInt("HighScore", 0);
+        }
+
     }
     public void RestartGame()
     {
@@ -26,6 +32,8 @@ public class GameManager : MonoBehaviour
     public void GameWon()
     {
         CoinCount.text="COINS:"+itemCollector.collected.ToString();
+        PlayerPrefs.SetInt("HighScore",PlayerPrefs.GetInt("HighScore",0)+itemCollector.collected);
+        totalCount.text = "TOTAL:" + PlayerPrefs.GetInt("HighScore", 0).ToString();
         GameWonPanel.SetActive(true);
         playerMovement.isPlayable = false;
         playerGun.isFirable = false;
