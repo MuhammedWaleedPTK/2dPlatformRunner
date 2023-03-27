@@ -10,6 +10,8 @@ public class AudioManager : MonoBehaviour
     [SerializeField] AudioSource fireSound;
     [SerializeField] AudioSource winSound;
     [SerializeField] AudioSource hitSound;
+    [SerializeField] AudioSource BGM;
+    private bool isMusicOn = true;
 
 
 
@@ -33,6 +35,19 @@ public class AudioManager : MonoBehaviour
     public void HitSound()
     {
         hitSound.Play();
+    }
+    public void ToggleMusic()
+    {
+        if (isMusicOn)
+        {
+            BGM.Pause();
+            isMusicOn= false;
+        }
+        else
+        {
+            BGM.Play();
+            isMusicOn= true;
+        }
     }
 
 }

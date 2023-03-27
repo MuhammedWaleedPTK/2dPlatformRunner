@@ -23,6 +23,12 @@ public class GameManager : MonoBehaviour
         {
             PlayerPrefs.SetInt("HighScore", 0);
         }
+        int unlockedLevels = PlayerPrefs.GetInt("UnlockedLevels", 0);
+        int scene = SceneManager.GetActiveScene().buildIndex;
+        if (unlockedLevels < scene)
+        {
+            PlayerPrefs.SetInt("UnlockedLevels", SceneManager.GetActiveScene().buildIndex);
+        }
 
     }
     public void RestartGame()
