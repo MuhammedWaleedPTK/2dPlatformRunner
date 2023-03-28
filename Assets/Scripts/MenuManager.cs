@@ -13,6 +13,11 @@ public class MenuManager : MonoBehaviour
     public LevelUnlocker levelUnlocker;
     private void Start()
     {
+        if (!PlayerPrefs.HasKey("UnlockedLevels"))
+        {
+            PlayerPrefs.SetInt("UnlockedLevels", 1);
+        }
+
         Score.text = PlayerPrefs.GetInt("HighScore", 0).ToString();
         MainPanel.SetActive(true);
         LevelPanel.SetActive(false);
